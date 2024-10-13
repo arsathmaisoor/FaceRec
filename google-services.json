@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "794085062282",
+    "project_id": "facerec-fb8e1",
+    "storage_bucket": "facerec-fb8e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794085062282:android:32d0c097d8904cf7d3df73",
+        "android_client_info": {
+          "package_name": "com.arsath.facerec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTK0ZmR8HJI3W89EnA8GwRb0vRsDkHYCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
