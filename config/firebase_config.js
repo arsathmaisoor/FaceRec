@@ -1,5 +1,7 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/storage';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -12,10 +14,20 @@ const firebaseConfig = {
   measurementId: "G-QGHB62TW5L"
 };
 
-// Initialize Firebase only once
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-// Export firebase instance for use in other files
-export { firebase };
+// Initialize Firestore
+const firestore = getFirestore(app);
+
+// Initialize Storage
+const storage = getStorage(app);
+
+// Export the Firestore and Storage instances
+export { firestore, storage };
+
+
+
+
+
+
