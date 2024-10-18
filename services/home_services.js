@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { storage, firestore } from '../config/firebase_config';
 
 // Function to pick image from gallery
@@ -19,15 +19,21 @@ export const pickImage = async (setImage) => {
   }
 };
 
+// Function to generate a unique employee number
+const generateEmployeeNumber = () => {
+  const timestamp = new Date().getTime();
+  return `EMP-${timestamp}`;
+};
+
 // Function to upload the image to Firebase Storage and save details to Firestore
-export const uploadMedia = async (image, customName, setImage, setCustomName, setUploading) => {
+export const uploadMedia = async (image, customName, email, remarks, setImage, setCustomName, setEmail, setRemarks, setUploading) => {
   if (!image) {
     Alert.alert('Please select an image first!');
     return;
   }
 
-  if (!customName) {
-    Alert.alert('Please enter a name for the file!');
+  if (!customName || !email || !remarks) {
+    Alert.alert('Please enter all the details!');
     return;
   }
 
@@ -51,7 +57,7 @@ export const uploadMedia = async (image, customName, setImage, setCustomName, se
 
     // Get file extension and create a filename
     const fileExtension = image.substring(image.lastIndexOf('.') + 1);
-    const filename = `${customName}.${fileExtension}`;
+    const filename = `${customName}`;
 
     // Reference to Firebase Storage
     const storageRef = ref(storage, filename);
@@ -63,9 +69,15 @@ export const uploadMedia = async (image, customName, setImage, setCustomName, se
     // Get the download URL of the uploaded image
     const downloadURL = await getDownloadURL(storageRef);
 
-    // Save image details to Firestore under 'Employees' collection
-    await addDoc(collection(firestore, 'Employees'), {
+    // Generate a unique employee number
+    const employeeNumber = generateEmployeeNumber();
+
+    // Save employee details to Firestore under 'Employees' collection with document ID as employeeNumber
+    await setDoc(doc(firestore, 'Employees', employeeNumber), {
+      employeeNumber,
       name: customName,
+      email,
+      remarks,
       imageUrl: downloadURL,
       timestamp: serverTimestamp(),
     });
@@ -77,6 +89,8 @@ export const uploadMedia = async (image, customName, setImage, setCustomName, se
     Alert.alert('Photo Uploaded and Saved to Firestore Successfully!');
     setImage(null);
     setCustomName('');
+    setEmail('');
+    setRemarks('');
   } catch (error) {
     console.error('Upload failed', error);
     setUploading(false);

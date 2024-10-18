@@ -1,5 +1,3 @@
-// home_screen.js
-
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, Image, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +9,8 @@ const UploadMediaFile = () => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [customName, setCustomName] = useState('');
+  const [email, setEmail] = useState('');
+  const [remarks, setRemarks] = useState('');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -25,15 +25,32 @@ const UploadMediaFile = () => {
           <Image source={{ uri: image }} style={styles.imagePreview} />
           <TextInput
             style={styles.input}
-            placeholder="Enter file name"
+            placeholder="Enter Employee Name"
             value={customName}
             onChangeText={setCustomName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Employee Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Remarks"
+            value={remarks}
+            onChangeText={setRemarks}
           />
         </>
       )}
 
-      <TouchableOpacity onPress={() => uploadMedia(image, customName, setImage, setCustomName, setUploading)} style={styles.button} disabled={uploading}>
-        <Text style={styles.buttonText}>{uploading ? 'Uploading...' : 'Upload Photo'}</Text>
+      <TouchableOpacity 
+        onPress={() => uploadMedia(image, customName, email, remarks, setImage, setCustomName, setEmail, setRemarks, setUploading)} 
+        style={styles.button} 
+        disabled={uploading}
+      >
+        <Text style={styles.buttonText}>{uploading ? 'Uploading...' : 'Upload Employee'}</Text>
       </TouchableOpacity>
 
       <Text style={styles.title}>Attendance Marker</Text>
