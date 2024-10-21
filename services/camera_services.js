@@ -8,7 +8,7 @@ import * as base64js from 'base64-js'; // Import base64-js for base64 to Uint8Ar
 AWS.config.update({
     region: "ap-south-1", // Replace with your AWS region
     accessKeyId: "AKIAQ4J5X6G4XRIQAOHV", // Replace with your AWS Access Key
-    secretAccessKey: "DU4/My+GKQO5kcBEhY+b4bSv0xRiu/ygtPWiVGuh",
+    secretAccessKey: "DU4/My+GxRiu/ygtPWiVGuh",
   });
 
 const rekognition = new AWS.Rekognition(); // Rekognition client from AWS SDK v2
